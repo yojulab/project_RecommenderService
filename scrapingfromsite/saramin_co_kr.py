@@ -9,7 +9,6 @@ res = requests.get(url_main+url_param)
 soup = BeautifulSoup(res.content, 'lxml')
 groups = soup.find_all(name=['li', 'div'], attrs={'class': ['item','lookup', 'effect_bold', 'list_item']})
 
-div.list_row>.col
 surfix_url = 'https://www.saramin.co.kr'
 total_count = 0
 print('total groups : ', len(groups))
@@ -50,7 +49,13 @@ for group in groups:
 
     # compare to DB
 
-    # detial 
     print(company_name, detail_url, apply_end_date)
+
+# 회원님과 높은 확률로 매칭된 추천공고
+# groups = soup.select(selector='div.list_row>.col')
+# print('total groups : ', len(groups))
+# for group in groups:
+# 
+#     # compare to DB
 
 print('total : ', total_count)
