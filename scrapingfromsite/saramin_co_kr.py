@@ -7,39 +7,37 @@ res = requests.get(url_main+url_param)
 
 # res.status_code, res.content
 soup = BeautifulSoup(res.content, 'lxml')
-groups = soup.select(selector='ul.list_product>li.item')						# list 그랜드 type
+groups = soup.find_all(name='li', attrs={'class': ['item','lookup', 'effect_bold']})
 
 surfix_url = 'https://www.saramin.co.kr'
+
+total_count = 0
+print('total groups : ', len(groups))
 for group in groups:
-    # print(group)
-    detail_url = surfix_url + group.a['href']
-    company_name = group.a.contents[3].string    # or group.h6.contents[0].strip()
-    apply_end_date = group.contents[5].string
+    divide = group['class'][0].strip()
+    if divide == 'item':
+        detail_url = surfix_url + group.a['href']       # 상세 링크
+        company_name = group.a.contents[3].string       # 회사명
+        recruit_title = group.strong.string             # 모집 주제
+        apply_end_date = group.contents[5].string       # 마감일
+        need_career = group.ul.contents[1].string       # 경력
+        need_education = group.ul.contents[3].string    # 학력
+        work_local = group.ul.contents[5].string        # 근무지역
+        total_count += 1
+
+    elif divide in ['lookup', 'effect_bold'] :
+        detail_url = surfix_url + group.a['href']       # 상세 링크
+        company_name = group.h3.string                  # 회사명
+        recruit_title = group.h4.string                 # 모집 주제
+        apply_end_date = group.contents[5].span.string  # 마감일
+        need_career = group.ul.li.string       # 경력
+        need_education = group.ul.contents[3].string    # 학력
+        work_local = group.ul.contents[5].string        # 근무지역
+        total_count += 1
 
     # compare to DB
 
     # detial 
-    res_detial = requests.get(detail_url)
-    soup_detial = BeautifulSoup(res_detial.content, 'lxml')
-    items_detial = soup_detial.select(selector='div.jview')
-    
-    summaries = items_detial[0].select(selector='.jv_summary>div.cont>div.col')
-    
-    sumary_list = ['경력', '학력', '근무형태', '우대사항', '급여', '직급/직책', '근무일시', '근무지역']
-    sumary_value = list()
-    for summary in summaries:
-        summary = summary.find_all(name='td', attrs={'class': ['t-label','t-content']})
-        label = summary[0].text.strip()
-        if label in sumary_list:
-            index = sumary_list.index(label)
-            sumary_value.insert(index, summary[1].text)    # 직무	프론트엔드
+    print(company_name, detail_url, apply_end_date)
 
-    tech_stacks = soup_detial.select(selector='div.content-body>.section-stacks>table>tbody>tr>td>code')
-    t01 = list()
-    for tech_stack in tech_stacks:
-        t01.append(tech_stack.string)
-
-    print(company_name, detail_url, sumary_value[0], t01)
-    # tech_stacks = soup_detial.select(selector='div.content-body>.section-stacks>table>tbody>tr>td>code')
-
-
+print('total : ', total_count)
