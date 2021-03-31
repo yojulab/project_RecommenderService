@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
 options = Options()
 options.page_load_strategy = 'eager'
 
@@ -49,24 +50,33 @@ groups = soup.select(selector='article.cpn-circle-conts-item')						# list type
 surfix_url = 'https://www.jobindexworld.com'
 total_count = 0
 print('total groups : ', len(groups))
+data = list()
 for group in groups:
-    detail_url = surfix_url + group.a['href']       # 상세 링크
-    company_name = group.a.div.contents[5].string   # 회사명
-    recruit_title = group.strong.string             # 모집 주제
-    create_date = group.span.string                 # 등록일 (`21.03.04)
-    apply_end_date = ''       # 마감일
-    need_career = ''      # 경력
-    need_education = ''    # 학력
-    employment_type = ''    # 채용 종류
-    work_place = ''        # 근무지역
+    info = dict()
+    info['detail_url'] = surfix_url + group.a['href']       # 상세 링크
+    info['company_name'] = group.a.div.contents[5].string   # 회사명
+    info['recruit_title'] = group.strong.string             # 모집 주제
+    info['create_date'] = group.span.string                 # 등록일 (`21.03.04)
+    info['apply_end_date'] = ''       # 마감일
+    info['need_career'] = ''      # 경력
+    info['need_education'] = ''    # 학력
+    info['employment_type'] = ''    # 채용 종류
+    info['work_place'] = ''        # 근무지역
 
     hash_tag = list()
     for content in group.div.contents[3].contents:
         if 'a' in content:
             hash_tag.append(content.string)
-
+    info['hash_tag'] = hash_tag
+    data.append(info)
     total_count += 1
-    print(company_name, detail_url, hash_tag)
+    print(info['company_name'], info['detail_url'], info['hash_tag'])
 
 print('total : ', total_count)
+
+db_name = 'db_scraping'
+collaction_name = 'periodicity_scraping'
+from models import dml_mongodb          
+insert_info = dml_mongodb.insert(db_name=db_name, collaction_name=collaction_name, data=data)
+
 driver.quit()
