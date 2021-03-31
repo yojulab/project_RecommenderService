@@ -1,11 +1,11 @@
 
 from pymongo import MongoClient
 
-db_address = 'mongodb://172.17.0.3:27017/'
+db_address = 'mongodb://127.0.0.1:27017/'
 
 def insert(**var_args):
 
-    with MongoClient(db_address)  as client:		# your ip
+    with MongoClient(db_address) as client:		# your ip
 
         db_name = var_args['db_name']
         target_db = client[db_name]						# get Database

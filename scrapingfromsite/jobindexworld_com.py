@@ -74,9 +74,16 @@ for group in groups:
 
 print('total : ', total_count)
 
-db_name = 'db_scraping'
-collaction_name = 'periodicity_scraping'
-from models import dml_mongodb          
-insert_info = dml_mongodb.insert(db_name=db_name, collaction_name=collaction_name, data=data)
+# 프로젝트 root를 import 참조 경로에 추가
+import os, sys
+sys.path.append(os.getcwd())
 
-driver.quit()
+try :
+    from libraries import dml_mongodb
+    db_name = 'db_scraping'
+    collaction_name = 'periodicity_scraping'
+    insert_info = dml_mongodb.insert(db_name=db_name, collaction_name=collaction_name, data=data)
+except:
+    pass
+finally :
+    driver.quit()
