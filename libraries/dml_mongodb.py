@@ -18,10 +18,13 @@ def insert(**var_args):
         if not data :
             result = 'empty data'
         else :
-            if len(data) <= 1 :
-                result = target_db.collaction_name.insert_one(data)
-            else :
-                result = target_db.collaction_name.insert_many(data)
+            try:                
+                if len(data) <= 1 :
+                    result = target_db[collaction_name].insert_one(data)
+                else :
+                    result = target_db[collaction_name].insert_many(data)
+            except:
+                pass
     
     return result
 
@@ -35,7 +38,7 @@ def find(**var_args):
         if (collaction_name not in target_db.list_collection_names()):
             target_db.create_collection(collaction_name)
 
-        result = target_db.collaction_name.find({})     # get Collection with find()
+        result = target_db[collaction_name].find({})     # get Collection with find()
     
     return result
 
@@ -49,7 +52,7 @@ def remove(**var_args):
         if (collaction_name not in target_db.list_collection_names()):
             target_db.create_collection(collaction_name)
 
-        result = target_db.collaction_name.remove({})     # get Collection with find()
+        result = target_db[collaction_name].remove({})     # get Collection with find()
     
     return result
 
@@ -63,6 +66,6 @@ def update(**var_args):
         if (collaction_name not in target_db.list_collection_names()):
             target_db.create_collection(collaction_name)
 
-        result = target_db.collaction_name.update({})     # get Collection with find()
+        result = target_db[collaction_name].update({})     # get Collection with find()
     
     return result
