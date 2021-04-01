@@ -79,9 +79,10 @@ for group in groups:
         if '<a' in str(content):
             hash_tag.append(content.string)
     info['hash_tag'] = hash_tag
-    data.append(info)
     total_count += 1
     print(info)
+
+    data.append(info)
 
 print('total : ', total_count)
 

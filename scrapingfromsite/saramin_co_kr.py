@@ -12,6 +12,8 @@ groups = soup.find_all(name=['li', 'div'], attrs={'class': ['item','lookup', 'ef
 surfix_url = 'https://www.saramin.co.kr'
 total_count = 0
 print('total groups : ', len(groups))
+data = list()
+
 for group in groups:
     divide = group['class'][0].strip()
     if divide == 'item':        # 그랜드 상품
@@ -48,8 +50,20 @@ for group in groups:
         total_count += 1
 
     # compare to DB
+    info = dict()
+    info['detail_url'] = detail_url       # 상세 링크
+    info['company_name'] = company_name   # 회사명
+    info['recruit_title'] = recruit_title             # 모집 주제
+    info['create_date'] = ''                 # 등록일 (`21.03.04)
+    info['apply_end_date'] = apply_end_date       # 마감일
+    info['need_career'] = need_career      # 경력
+    info['need_education'] = need_education    # 학력
+    info['employment_type'] = employment_type    # 채용 종류
+    info['work_place'] = work_place        # 근무지역
+    print(info)
 
-    print(company_name, detail_url, apply_end_date)
+    data.append(info)
+
 
 # 회원님과 높은 확률로 매칭된 추천공고
 # groups = soup.select(selector='div.list_row>.col')
@@ -59,3 +73,18 @@ for group in groups:
 #     # compare to DB
 
 print('total : ', total_count)
+
+# 프로젝트 root를 import 참조 경로에 추가
+import os, sys
+sys.path.append(os.getcwd())
+
+from libraries import dml_mongodb
+db_name = 'db_scraping'
+collaction_name = 'periodicity_scraping'
+
+try :
+    insert_info = dml_mongodb.insert(db_name=db_name, collaction_name=collaction_name, data=data)
+except:
+    pass
+finally :
+    pass
