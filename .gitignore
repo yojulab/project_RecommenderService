@@ -1,1 +1,3 @@
-**/*.pyc
+**/**.pyc
+home/__pycache__/views.cpython-38.pyc
+web_config/__pycache__/urls.cpython-38.pyc

@@ -40,7 +40,7 @@ def find(**var_args):
 
         result = target_db[collaction_name].find({})     # get Collection with find()
     
-    return result
+    return list(result)
 
 def remove(**var_args):
 
