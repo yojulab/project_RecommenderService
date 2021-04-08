@@ -19,6 +19,8 @@ from django.urls import path
 from home import views	as homeview
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", homeview.home, name="home"),
+    path("", homeview.list, name="home_list"),
     path("list/", homeview.list, name='search_list'),
+    path("home/", homeview.home, name="home"),
+    path("export_csv/", homeview.export_csv, name="export_csv"),
 ]
