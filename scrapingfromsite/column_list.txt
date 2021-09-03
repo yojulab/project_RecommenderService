@@ -1,0 +1,29 @@
+Table : SCRAPPING_SITE
+대상 사이트명 : target_name	# 프로그래머스
+대상 URL : target_url
+상세대상 URL : detail_target_url
+대분류명 : category_big	# 공통 IT
+중분류명 : category_middle
+소분류명 : category_small
+주요 검색어 : search_word  # 사용했을 시
+스크래핑 일자 : create_date
+주제(제목) : recruit_title
+회사명 : company_name
+내용 URL : detail_uri	# 구직회사 내용 화면
+직무 : task
+고용형태 : employment_type
+회사규모 : company_info
+경력 : need_career
+연봉 : salary
+기간 : apply_start_date, apply_end_date		#ex) 2021.09.03 14:30 → 202109031430
+위치 : work_place
+주요 서비스 : main_service
+업무소개 : work_info
+자격요건 : career_requirements
+우대사항 : preference
+조직문화 : company_culture
+개발팀 & 환경 : team_env
+제출서류 : need_doc
+담당컨설턴트 : contact_people
+해시태그 : hashtag
+학력 : need_education
