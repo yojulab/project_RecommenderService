@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function attentionItem(username, id){
+  $.ajax({ url: "/attention_item/",
+        data: { username: username, id: id },
+        method: "GET"})
+}
+</script>
+
   <div class="container" style="margin-top:30px">
     <table class="table table-striped">
       <thead>
@@ -16,7 +25,7 @@
       <tbody>
       {% for row in page_obj %}
       <tr>
-        <td> <a href={{row.detail_uri}} target="_blank">
+        <td> <a href={{row.detail_uri}} target="_blank" onclick="attentionItem('{{ user.username }}', {{row.id}});">
             {{row.recruit_title}} </a>
         </td>
         <td>{{row.apply_end_date}}</td>

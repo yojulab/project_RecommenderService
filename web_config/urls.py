@@ -26,6 +26,7 @@ urlpatterns = [
     path("home/", homeview.home, name="home"),
     path("export_csv/", homeview.export_csv, name="export_csv"),
     path("export_csv_rdb/", homeview.export_csv_rdb, name="export_csv_rdb"),
+    path("attention_item/", homeview.attention_item),
     path('common/', include('common.urls')),
 
 ]

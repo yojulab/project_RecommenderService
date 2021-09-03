@@ -118,3 +118,20 @@ def export_csv_rdb(request):
         if data['recruit_title']:
             writer.writerow(data.values())
     return response
+
+from django.http import JsonResponse
+
+def attention_item(request):
+    connect = sqlite3.connect('./db.sqlite3')
+    cursor = connect.cursor()
+    id = request.GET.get('id')
+    username = request.GET.get('username')
+    cursor.execute("insert into attention_item(id_scrapping_sie, username) values (?,?)",(id, username))
+    connect.commit()
+    connect.close()
+
+    data = {
+        'success': 'yes',
+        'error': 'no',
+    }
+    return JsonResponse(data)
