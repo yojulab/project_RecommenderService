@@ -48,9 +48,12 @@ def list_rdb(request):
     connect.row_factory = sqlite3.Row
     cursor = connect.cursor()
 
+    search = request.GET.get('search', '')
+    search = '%'+search+'%'
+    # if search:
     try:
         # get Collection with find()
-        cursor.execute('select * from SCRAPPING_SITE')
+        cursor.execute("select * from SCRAPPING_SITE where recruit_title like ?",(search))
         contact_list = cursor.fetchall()
         lineperpage = 20              # Show 15 contacts per page.
         paginator = Paginator(contact_list, lineperpage)
