@@ -49,11 +49,16 @@ def list_rdb(request):
     cursor = connect.cursor()
 
     search = request.GET.get('search', '')
-    search = '%'+search+'%'
+    if search and request.user.is_authenticated:
+        username = request.user.username
+        cursor.execute("insert into attention_search(search_word, username) values (?,?)",(search,username))
+        connect.commit()
+
     # if search:
     try:
         # get Collection with find()
-        cursor.execute("select * from SCRAPPING_SITE where recruit_title like ?",(search))
+        search = '%' + search + '%'
+        cursor.execute("select * from SCRAPPING_SITE where recruit_title like '"+search+"'")
         contact_list = cursor.fetchall()
         lineperpage = 20              # Show 15 contacts per page.
         paginator = Paginator(contact_list, lineperpage)
