@@ -5,17 +5,21 @@ import datetime
 import sqlite3
 
 import saramin_co_kr_rdb
+# import programmers_rdb
 
 def job_site(target_site_name):
     print("I'm working...:", target_site_name)
     start_date = datetime.datetime.now()
-    end_date = str()
-    during_time = str()
+    end_date = datetime.datetime.min
+    during_time = datetime.datetime.min
     success = 'True'
     exception = str()
     try:
         if target_site_name == 'saramin':
-            saramin_co_kr_rdb.scrapping_saramin()
+            saramin_co_kr_rdb.scrapping_site()
+        elif target_site_name == 'programmers':
+            # programmers_rdb.scraping_site()
+            pass
         else:
             pass
 
@@ -24,7 +28,7 @@ def job_site(target_site_name):
 
     except Exception as e:
         success = 'False'
-        exception = e
+        exception = str(e)  # e.message : python2
         pass
     finally:
         connect = sqlite3.connect('../db.sqlite3')
@@ -36,7 +40,8 @@ def job_site(target_site_name):
         connect.close()
 
 
-schedule.every(10).minutes.do(job_site,'saramin')
+schedule.every(1).minutes.do(job_site,'saramin')
+schedule.every(1).minutes.do(job_site,'programmers')
 # schedule.every(4).day.at("10:30").do(job_site,'saramin')
 # schedule.every().day.at("10:30").do(job)
 

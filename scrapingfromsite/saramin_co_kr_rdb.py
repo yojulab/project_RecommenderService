@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrapping_saramin():
+def scrapping_site():
     url_main = 'https://www.saramin.co.kr/zf_user/jobs/list/job-category'
     url_param = '?cat_bcd=4'
     res = requests.get(url_main+url_param)
@@ -12,6 +12,7 @@ def scrapping_saramin():
 
     target_name = '사람인'
     surfix_url = 'https://www.saramin.co.kr'
+    category_big = 'IT'
     total_count = 0
     print('total groups : ', len(groups))
     data = list()
@@ -57,11 +58,11 @@ def scrapping_saramin():
         # compare to DB
         cursor.execute(
             "insert into SCRAPPING_SITE("
-            "target_name,target_url,detail_uri, company_name, recruit_title,create_date,apply_end_date,need_career,need_education,employment_type,work_place) "
-            "values(?,?,?,?,?,datetime('now'),?,?,?,?,?)",
+            "target_name,target_url,detail_uri, category_big, company_name, recruit_title,create_date,apply_end_date,need_career,need_education,employment_type,work_place) "
+            "values(?,?,?,?,?,?,datetime('now'),?,?,?,?,?)",
             (target_name,surfix_url,detail_uri, company_name, recruit_title,apply_end_date,need_career,need_education,employment_type,work_place))
 
     connect.commit()
     connect.close()
     print('total : ', total_count)
-    return
+    return True
