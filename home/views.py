@@ -69,6 +69,7 @@ def list_rdb(request):
         pass
     finally:
         pass
+    connect.close()
 
     return render(request, 'home/list.html', context=data)
 

@@ -1,7 +1,4 @@
 drop table SCRAPPING_SITE;
-drop table attention_search;
-drop table attention_item;
-drop table do_scheduler;
 
 CREATE TABLE  SCRAPPING_SITE(
  target_name	 TEXT,
@@ -35,6 +32,7 @@ id INTEGER,
  PRIMARY KEY(id)
 );
 
+drop table attention_search;
 create table attention_search (
     search_word TEXT,
     username TEXT,
@@ -42,6 +40,7 @@ create table attention_search (
     PRIMARY KEY(id)
 );
 
+drop table attention_item;
 create table attention_item (
     id_scrapping_sie INTEGER,
     username TEXT,
@@ -49,11 +48,14 @@ create table attention_item (
     PRIMARY KEY(id)
 );
 
+drop table do_scheduler;
 create table do_scheduler(
     target_site_name TEXT,
     start_date TEXT,
     end_date TEXT,
     during_time TEXT,
+    success TEXT,
+    exception TEXT,
     id INTEGER,
     PRIMARY KEY(id)
 );
