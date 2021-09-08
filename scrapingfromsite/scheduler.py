@@ -31,6 +31,7 @@ def job_site(target_site_name):
         exception = str(e)  # e.message : python2
         pass
     finally:
+        print('total_count : ', total_count)
         connect = sqlite3.connect('../db.sqlite3')
         cursor = connect.cursor()
         cursor.execute("insert into do_scheduler(target_site_name, start_date, end_date, during_time, total_count,"
@@ -42,12 +43,11 @@ def job_site(target_site_name):
         connect.close()
 
 
-schedule.every(1).minutes.do(job_site,'saramin')
 schedule.every(1).minutes.do(job_site,'programmers')
+schedule.every(1).minutes.do(job_site,'saramin')
 # schedule.every(4).day.at("10:30").do(job_site,'saramin')
 # schedule.every().day.at("10:30").do(job)
 
 while True:
     schedule.run_pending()
-    # print("I'm working...: schedule")
     time.sleep(1)
