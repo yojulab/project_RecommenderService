@@ -10,8 +10,6 @@ import datetime
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
-
-
 def scrapping_site():
     uri = 'https://programmers.co.kr'
     url = 'https://programmers.co.kr/job?page=1&min_salary=&min_career=&min_employees=&order=recent'
@@ -26,7 +24,9 @@ def scrapping_site():
     #           "work_place TEXT, main_service TEXT, work_info TEXT, career_requirements TEXT, preference TEXT, "
     #           "company_culture TEXT, team_env TEXT)")
     try:
-        browser = webdriver.Chrome('../../chromedriver.exe')
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        browser = webdriver.Chrome('../../chromedriver.exe', options=options)
         browser.get(url)
 
         time.sleep(2)

@@ -19,7 +19,7 @@ def job_site(target_site_name):
         if target_site_name == 'saramin':
             total_count = saramin_co_kr_rdb.scrapping_site()
         elif target_site_name == 'programmers':
-            total_count = programmers_rdb.scraping_site()
+            total_count = programmers_rdb.scrapping_site()
         else:
             pass
 
@@ -43,8 +43,10 @@ def job_site(target_site_name):
         connect.close()
 
 
-schedule.every(1).minutes.do(job_site,'programmers')
-schedule.every(1).minutes.do(job_site,'saramin')
+# schedule.every(1).minutes.do(job_site,'programmers')
+# schedule.every(1).minutes.do(job_site,'saramin')
+schedule.every(2).hours.do(job_site,'programmers')
+schedule.every(2).hours.do(job_site,'saramin')
 # schedule.every(4).day.at("10:30").do(job_site,'saramin')
 # schedule.every().day.at("10:30").do(job)
 
