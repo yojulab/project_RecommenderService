@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 import sqlite3
+from common import get_apply_end_date
 
 def scrapping_site():
     url_main = 'https://www.saramin.co.kr/zf_user/jobs/list/job-category'
@@ -59,13 +60,14 @@ def scrapping_site():
                 total_count += 1
 
             # compare to DB
+            apply_end_date = get_apply_end_date(apply_end_date)
             cursor.execute(
                 "insert into SCRAPPING_SITE("
                 "target_name, target_url, detail_uri, category_big, company_name, recruit_title, create_date,"
                 "apply_end_date, need_career, need_education, employment_type, work_place) "
                 "values(?,?,?,?,?,?,datetime('now'),?,?,?,?,?)",
-                (target_name, surfix_url, detail_uri, category_big, company_name, recruit_title, apply_end_date,
-                 need_career, need_education, employment_type, work_place))
+                (target_name, surfix_url, detail_uri, category_big, company_name, recruit_title,
+                 apply_end_date, need_career, need_education, employment_type, work_place))
     finally:
         connect.commit()
         connect.close()

@@ -126,6 +126,17 @@ def export_csv_rdb(request):
         data = { key : row[key] for key in fromlist }
         if data['recruit_title']:
             writer.writerow(data.values())
+
+    response['Content-Disposition'] = 'attachment; filename="export01.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['모집 주제', '상세링크', '마감일', '경력', '학력', '근무지역', '회사명'])
+
+    fromlist = ['recruit_title', 'detail_uri', 'apply_end_date', 'need_career', 'need_education', 'work_place', 'company_name']
+    for row in contact_list:
+        data = { key : row[key] for key in fromlist }
+        if data['recruit_title']:
+            writer.writerow(data.values())
+
     return response
 
 from django.http import JsonResponse
