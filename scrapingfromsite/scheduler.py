@@ -5,7 +5,7 @@ import datetime
 import sqlite3
 
 import saramin_co_kr_rdb
-# import programmers_rdb
+import programmers_rdb
 
 def job_site(target_site_name):
     print("I'm working...:", target_site_name)
@@ -14,12 +14,12 @@ def job_site(target_site_name):
     during_time = datetime.datetime.min
     success = 'True'
     exception = str()
+    total_count = 0
     try:
         if target_site_name == 'saramin':
-            saramin_co_kr_rdb.scrapping_site()
+            total_count = saramin_co_kr_rdb.scrapping_site()
         elif target_site_name == 'programmers':
-            # programmers_rdb.scraping_site()
-            pass
+            total_count = programmers_rdb.scraping_site()
         else:
             pass
 
@@ -33,9 +33,11 @@ def job_site(target_site_name):
     finally:
         connect = sqlite3.connect('../db.sqlite3')
         cursor = connect.cursor()
-        cursor.execute("insert into do_scheduler(target_site_name, start_date, end_date, during_time, success, exception) "
-                       "values (?,?,?,?,?,?)",
-                       (target_site_name, str(start_date), str(end_date), str(during_time), success, exception))
+        cursor.execute("insert into do_scheduler(target_site_name, start_date, end_date, during_time, total_count,"
+                       "success, exception) "
+                       "values (?,?,?,?,?,?,?)",
+                       (target_site_name, str(start_date), str(end_date), str(during_time), total_count,
+                        success, exception))
         connect.commit()
         connect.close()
 

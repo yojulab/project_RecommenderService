@@ -54,6 +54,7 @@ create table do_scheduler(
     start_date TEXT,
     end_date TEXT,
     during_time TEXT,
+    total_count INTEGER,
     success TEXT,
     exception TEXT,
     id INTEGER,

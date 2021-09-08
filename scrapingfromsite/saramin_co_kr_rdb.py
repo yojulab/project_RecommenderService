@@ -64,5 +64,5 @@ def scrapping_site():
 
     connect.commit()
     connect.close()
-    print('total : ', total_count)
-    return True
+
+    return len(groups)
