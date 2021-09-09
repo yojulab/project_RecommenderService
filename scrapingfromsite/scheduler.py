@@ -45,10 +45,12 @@ def job_site(target_site_name):
 
 # schedule.every(1).minutes.do(job_site,'programmers')
 # schedule.every(1).minutes.do(job_site,'saramin')
-schedule.every(2).hours.do(job_site,'programmers')
-schedule.every(2).hours.do(job_site,'saramin')
-# schedule.every(4).day.at("10:30").do(job_site,'saramin')
-# schedule.every().day.at("10:30").do(job)
+# schedule.every(2).hours.do(job_site,'programmers')
+# schedule.every(2).hours.do(job_site,'saramin')
+schedule.every(1).day.at("10:30").do(job_site,'saramin')
+schedule.every(1).day.at("10:30").do(job_site,'programmers')
+schedule.every(1).day.at("17:30").do(job_site,'saramin')
+schedule.every(1).day.at("17:30").do(job_site,'programmers')
 
 while True:
     schedule.run_pending()
