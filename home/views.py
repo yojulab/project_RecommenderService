@@ -62,12 +62,11 @@ def list_rdb(request):
     try:
         # get Collection with find()
         search = '%' + search + '%'
-        cursor.execute("select * from SCRAPPING_SITE "
-                       "where recruit_title like '"+search+"'" 
-                       "order by apply_end_date")
-        # cursor.execute("select * from SCRAPPING_SITE "
-        #                "where recruit_title like '"+search+"' and CAST(apply_end_date as integer) >= ? "
-        #                 "order by apply_end_date",(current_day))
+        query = "select * from SCRAPPING_SITE " \
+                "where apply_end_date >= " + current_day + " and recruit_title like '" + search + "' " \
+                "order by apply_end_date"
+
+        cursor.execute(query)
         contact_list = cursor.fetchall()
         lineperpage = 20              # Show 15 contacts per page.
         paginator = Paginator(contact_list, lineperpage)
