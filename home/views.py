@@ -41,6 +41,8 @@ def list(request):
 
 import sqlite3
 from django.core.paginator import Paginator
+from datetime import datetime
+
 def list_rdb(request):
     data = dict()
 
@@ -54,11 +56,18 @@ def list_rdb(request):
         cursor.execute("insert into attention_search(search_word, username) values (?,?)",(search,username))
         connect.commit()
 
+    current_day = datetime.now().strftime("%Y%m%d")
+
     # if search:
     try:
         # get Collection with find()
         search = '%' + search + '%'
-        cursor.execute("select * from SCRAPPING_SITE where recruit_title like '"+search+"'")
+        cursor.execute("select * from SCRAPPING_SITE "
+                       "where recruit_title like '"+search+"'" 
+                       "order by apply_end_date")
+        # cursor.execute("select * from SCRAPPING_SITE "
+        #                "where recruit_title like '"+search+"' and CAST(apply_end_date as integer) >= ? "
+        #                 "order by apply_end_date",(current_day))
         contact_list = cursor.fetchall()
         lineperpage = 20              # Show 15 contacts per page.
         paginator = Paginator(contact_list, lineperpage)
