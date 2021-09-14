@@ -52,6 +52,7 @@ schedule.every(1).day.at("10:30").do(job_site,'programmers')
 schedule.every(1).day.at("17:30").do(job_site,'saramin')
 schedule.every(1).day.at("17:30").do(job_site,'programmers')
 
+print('scheduler start...!')
 while True:
     schedule.run_pending()
     time.sleep(1)
