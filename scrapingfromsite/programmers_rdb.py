@@ -159,7 +159,7 @@ def scrapping_site():
 
     return len(length)
 
-# scrapping_site()
+scrapping_site()
 
 
 
