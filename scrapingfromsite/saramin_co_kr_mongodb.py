@@ -41,7 +41,7 @@ for group in groups:
     elif divide == 'list_item' :        # 전체 채용 정보
         detail_url = surfix_url + group.a['href']       # 상세 링크
         company_name = group.contents[3].span.string    # 회사명
-        recruit_title = group.contents[3].span.string                 # 모집 주제
+        recruit_title = group.contents[5].a.span.string                 # 모집 주제
         apply_end_date = group.contents[11].contents[3].contents[0]  # 마감일
         need_career = group.contents[7].p.string       # 경력
         need_education = group.contents[7].contents[1].string    # 학력
